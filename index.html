@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Regalo para ti</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .gift {
+      width: 200px;
+      height: 200px;
+      background: url('https://i.imgur.com/XCjF6cg.png') no-repeat center/contain;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.6s ease;
+      z-index: 10;
+    }
+
+    .gift.open {
+      transform: scale(0) rotate(360deg);
+    }
+
+    .message {
+      position: absolute;
+      font-size: 20px;
+      color: white;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      animation: float 6s infinite ease-in-out;
+      opacity: 0.9;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+      100% { transform: translateY(0); }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .surprise img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    /* corazones flotando */
+    .heart {
+      position: absolute;
+      color: #ff4d6d;
+      font-size: 25px;
+      animation: fall 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10vh) scale(1); opacity: 1; }
+      100% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="gift" class="gift"></div>
+
+    <!-- Mensajes alrededor -->
+    <div class="message" style="top:10%; left:15%;">❤️‍🔥 Me tienes eskizo ❤️‍🔥</div>
+    <div class="message" style="top:10%; right:15%;">💕 Te pienso siempre 💕</div>
+    <div class="message" style="top:27%; left:10%;">😈 Muejeje 😈</div>
+    <div class="message" style="top:27%; right:10%;">💖 Te amo infinito 💖</div>
+    <div class="message" style="top:47%; left:5%;">🌸 Gracias por estar en mi vida 🌸</div>
+    <div class="message" style="top:47%; right:5%;">😍 Eres única 😍</div>
+    <div class="message" style="bottom:27%; left:15%;">🌹 Mi razón de sonreír 🌹</div>
+    <div class="message" style="bottom:27%; right:15%;">👅 Eres mi wey 👅</div>
+    <div class="message" style="bottom:10%; left:10%;">✨ Eres mi alegría ✨</div>
+    <div class="message" style="bottom:10%; right:7%;">🫶🏼 Eres muy especial 🫶🏼</div>
+  </div>
+
+  <div id="surprise" class="surprise hidden">
+    <img src="https://i.imgur.com/wOo2n17.jpeg" alt="Sorpresa">
+  </div>
+
+  <!-- Música -->
+  <audio id="bg-music" src="https://cdn.pixabay.com/download/audio/2021/10/29/audio_2655c9bb03.mp3?filename=sirens-and-silence-10036.mp3"></audio>
+
+  <script>
+    let clicks = 0;
+    const gift = document.getElementById("gift");
+    const surprise = document.getElementById("surprise");
+    const music = document.getElementById("bg-music");
+
+    gift.addEventListener("click", () => {
+      clicks++;
+      gift.style.transform = `scale(${1 - clicks*0.15}) rotate(${clicks*30}deg)`;
+
+      if(clicks >= 5){
+        gift.classList.add("open");
+        setTimeout(() => {
+          gift.style.display = "none";
+          surprise.classList.remove("hidden");
+          music.play();
+        }, 800);
+      }
+    });
+
+    // Generar corazones flotantes
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerText = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (20 + Math.random() * 20) + "px";
+      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+    setInterval(createHeart, 700);
+  </script>
+</body>
+</html>
